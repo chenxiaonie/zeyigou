@@ -1,4 +1,5 @@
 package com.zeyigou.sellergoods.service;
+import com.zeyigou.group.Goods;
 import com.zeyigou.pojo.PageResult;
 import com.zeyigou.pojo.TbGoods;
 
@@ -28,13 +29,13 @@ public interface GoodsService {
 	/**
 	 * 增加
 	*/
-	public void add(TbGoods goods);
+	public void add(Goods goods);
 	
 	
 	/**
 	 * 修改
 	 */
-	public void update(TbGoods goods);
+	public void update(Goods goods);
 	
 
 	/**
@@ -58,5 +59,6 @@ public interface GoodsService {
 	 * @return
 	 */
 	public PageResult findPage(TbGoods goods, int pageNum,int pageSize);
-	
+
+    void updateStatus(String status, Long[] ids);
 }

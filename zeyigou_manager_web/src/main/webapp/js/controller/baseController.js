@@ -13,7 +13,7 @@ app.controller("baseController",function ($scope){
         perPageOptions: [10, 20, 30, 40, 50],  //分页选项
         onChange : function(){				//改变页码时触发此事件
             //findByPage();					//分页查询
-            $scope.search();						//条件查询带分页
+            // $scope.search();						//条件查询带分页
         }
     }
     //定义用户选择的id数组

@@ -1,10 +1,12 @@
 package com.zeyigou.shop.controller;
 
 import com.alibaba.dubbo.config.annotation.Reference;
+import com.zeyigou.group.Goods;
 import com.zeyigou.pojo.PageResult;
 import com.zeyigou.pojo.Result;
 import com.zeyigou.pojo.TbGoods;
 import com.zeyigou.sellergoods.service.GoodsService;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -48,8 +50,13 @@ public class GoodsController {
 	 * @return
 	 */
 	@RequestMapping("/add")
-	public Result add(@RequestBody TbGoods goods){
+	public Result add(@RequestBody Goods goods){
 		try {
+			//获取登录id
+			String name = SecurityContextHolder.getContext().getAuthentication().getName();
+			//设置id
+			goods.getGoods().setSellerId(name);
+			//添加
 			goodsService.add(goods);
 			return new Result(true, "增加成功");
 		} catch (Exception e) {
@@ -64,7 +71,7 @@ public class GoodsController {
 	 * @return
 	 */
 	@RequestMapping("/update")
-	public Result update(@RequestBody TbGoods goods){
+	public Result update(@RequestBody Goods goods){
 		try {
 			goodsService.update(goods);
 			return new Result(true, "修改成功");

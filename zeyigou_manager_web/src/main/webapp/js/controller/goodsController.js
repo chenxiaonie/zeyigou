@@ -1,8 +1,28 @@
  //控制层 
-app.controller('goodsController' ,function($scope,$controller   ,goodsService){	
+app.controller('goodsController' ,function($scope,$controller,itemCatService,goodsService){
 	
 	$controller('baseController',{$scope:$scope});//继承
-	
+
+	$scope.status = ["未审核","己审核","审核未通过","关闭"];
+
+	$scope.categoryList = [];
+	$scope.findCategory=()=>{
+		itemCatService.findAll().success(response=>{
+			for (let i=0,len=response.length;i < len;i++){
+				$scope.categoryList[response[i].id] = response[i].name
+			}
+
+		})
+	}
+	$scope.updateStatus=(status)=>{
+		goodsService.updateStatus(status,$scope.selectIds).success(ressponse=>{
+			if (ressponse.success){
+				$scope.findAll();
+			}else {
+				alert(ressponse.message)
+			}
+		})
+	}
     //读取列表数据绑定到表单中  
 	$scope.findAll=function(){
 		goodsService.findAll().success(
@@ -68,10 +88,10 @@ app.controller('goodsController' ,function($scope,$controller   ,goodsService){
 	$scope.searchEntity={};//定义搜索对象 
 	
 	//搜索
-	$scope.search=function(page,rows){			
-		goodsService.search(page,rows,$scope.searchEntity).success(
+	$scope.search=function(){
+		goodsService.search($scope.paginationConf.currentPage, $scope.paginationConf.itemsPerPage,$scope.searchEntity).success(
 			function(response){
-				$scope.list=response.rows;	
+				$scope.list=response.rows;
 				$scope.paginationConf.totalItems=response.total;//更新总记录数
 			}			
 		);

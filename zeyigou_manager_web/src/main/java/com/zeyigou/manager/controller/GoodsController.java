@@ -1,6 +1,7 @@
 package com.zeyigou.manager.controller;
 import java.util.List;
 
+import com.zeyigou.group.Goods;
 import com.zeyigou.pojo.PageResult;
 import com.zeyigou.pojo.Result;
 import com.zeyigou.pojo.TbGoods;
@@ -47,7 +48,7 @@ public class GoodsController {
 	 * @return
 	 */
 	@RequestMapping("/add")
-	public Result add(@RequestBody TbGoods goods){
+	public Result add(@RequestBody Goods goods){
 		try {
 			goodsService.add(goods);
 			return new Result(true, "增加成功");
@@ -63,7 +64,7 @@ public class GoodsController {
 	 * @return
 	 */
 	@RequestMapping("/update")
-	public Result update(@RequestBody TbGoods goods){
+	public Result update(@RequestBody Goods goods){
 		try {
 			goodsService.update(goods);
 			return new Result(true, "修改成功");
@@ -107,8 +108,18 @@ public class GoodsController {
 	 * @return
 	 */
 	@RequestMapping("/search")
-	public PageResult search(@RequestBody TbGoods goods, int page, int rows  ){
-		return goodsService.findPage(goods, page, rows);		
+	public PageResult search(@RequestBody(required = false) TbGoods goods, int page, int size  ){
+		return goodsService.findPage(goods, page, size);
 	}
-	
+	//审核商品
+	@RequestMapping("updateStatus")
+	public Result updateStatus(String status,Long[] ids){
+		try {
+			goodsService.updateStatus(status,ids);
+			return new Result(true, "删除成功");
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new Result(false, "删除失败");
+		}
+	}
 }
