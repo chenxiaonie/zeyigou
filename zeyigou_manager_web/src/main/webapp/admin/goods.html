@@ -85,7 +85,7 @@ ng-init="findAll();findCategory()">
 			                          <tr ng-repeat="good in list" ng-if="good.auditStatus == 0">
 			                              <td><input type="checkbox" ng-click="updateSelection($event,good.id)"></td>
 				                          <td>{{good.id}}</td>
-									      <td>{{good.goodName}}</td>
+									      <td>{{good.goodsName}}</td>
 									      <td>{{good.price}}</td>
 									      <td>{{categoryList[good.category1Id]}}</td>
 									      <td>{{categoryList[good.category2Id]}}</td>
