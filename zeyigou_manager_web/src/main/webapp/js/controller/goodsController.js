@@ -10,6 +10,7 @@ app.controller('goodsController' ,function($scope,$controller,itemCatService,goo
 		itemCatService.findAll().success(response=>{
 			for (let i=0,len=response.length;i < len;i++){
 				$scope.categoryList[response[i].id] = response[i].name
+				console.log(response[i].name)
 			}
 
 		})
